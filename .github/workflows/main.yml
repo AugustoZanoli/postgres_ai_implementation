@@ -1,0 +1,15 @@
+name: Enforce main source
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Only staging can merge into main
+        run: |
+          if [ "${{ github.head_ref }}" != "staging" ]; then
+            echo "PRs para main só podem vir de staging."
+            exit 1
+          fi
